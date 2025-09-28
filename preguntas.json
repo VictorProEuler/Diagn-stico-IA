@@ -1,0 +1,47 @@
+[
+  {
+    "texto": "¿Qué es Machine Learning?",
+    "opciones": [
+      "Un lenguaje de programación especializado",
+      "Un conjunto de técnicas para que las máquinas aprendan patrones",
+      "Un método para almacenar datos en la nube"
+    ],
+    "correcta": 1
+  },
+  {
+    "texto": "¿Qué caracteriza a una red neuronal profunda?",
+    "opciones": [
+      "Es un algoritmo que no necesita entrenamiento",
+      "Funciona únicamente con datos de texto",
+      "Tiene múltiples capas ocultas entre la entrada y la salida"
+    ],
+    "correcta": 2
+  },
+  {
+    "texto": "¿Cuál es un uso típico de la visión por computador?",
+    "opciones": [
+      "Cálculo de derivadas",
+      "Clasificación de imágenes",
+      "Compresión de archivos ZIP"
+    ],
+    "correcta": 1
+  },
+  {
+    "texto": "¿Qué significa el término 'overfitting' en Machine Learning?",
+    "opciones": [
+      "El modelo procesa imágenes de gran tamaño",
+      "El modelo aprende demasiado bien los datos de entrenamiento y falla en los nuevos",
+      "El modelo no logra aprender los datos de entrenamiento"
+    ],
+    "correcta": 1
+  },
+  {
+    "texto": "¿Qué es un dataset de entrenamiento?",
+    "opciones": [
+      "Un conjunto de datos utilizado para que el modelo aprenda patrones",
+      "Un hardware especializado para entrenar modelos",
+      "Un algoritmo que ajusta los parámetros del modelo"
+    ],
+    "correcta": 0
+  }
+]

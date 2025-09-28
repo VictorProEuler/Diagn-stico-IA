@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor de Preguntas</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .formulario { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 15px; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Editor de Preguntas</h1>
+
+  <ul id="listaPreguntas"></ul>
+
+  <div class="formulario">
+    <h2>Agregar nueva pregunta</h2>
+    <label>Texto de la pregunta:</label><br>
+    <input type="text" id="nuevaPregunta" style="width: 100%;"><br><br>
+
+    <label>Opciones (una por línea):</label><br>
+    <textarea id="nuevasOpciones" rows="4" style="width: 100%;"></textarea><br><br>
+
+    <label>Número de la opción correcta:</label><br>
+    <input type="number" id="opcionCorrecta" min="1" value="1"><br><br>
+
+    <button onclick="agregarPregunta()">Agregar</button>
+    <button onclick="descargarPreguntas()">Descargar JSON</button>
+  </div>
+
+  <script>
+    let preguntas = [];
+
+    function mostrarPreguntas() {
+      const lista = document.getElementById("listaPreguntas");
+      lista.innerHTML = "";
+      preguntas.forEach((p, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${i+1}. ${p.texto} (Correcta: ${p.opciones[p.correcta]})`;
+        lista.appendChild(li);
+      });
+    }
+
+    function agregarPregunta() {
+      const texto = document.getElementById("nuevaPregunta").value.trim();
+      const opcionesTexto = document.getElementById("nuevasOpciones").value.trim();
+      const correctaNum = parseInt(document.getElementById("opcionCorrecta").value) - 1;
+
+      if (!texto || !opcionesTexto) {
+        alert("Debes llenar todos los campos.");
+        return;
+      }
+
+      const opciones = opcionesTexto.split("\n").map(o => o.trim()).filter(o => o);
+      if (opciones.length < 2) {
+        alert("Debes ingresar al menos dos opciones.");
+        return;
+      }
+      if (correctaNum < 0 || correctaNum >= opciones.length) {
+        alert("Número de opción correcta no válido.");
+        return;
+      }
+
+      preguntas.push({ texto, opciones, correcta: correctaNum });
+      mostrarPreguntas();
+
+      document.getElementById("nuevaPregunta").value = "";
+      document.getElementById("nuevasOpciones").value = "";
+      document.getElementById("opcionCorrecta").value = "1";
+    }
+
+    function descargarPreguntas() {
+      const blob = new Blob([JSON.stringify(preguntas, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "preguntas.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

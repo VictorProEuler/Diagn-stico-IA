@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Diagnóstico - IA</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .resultado { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Test Diagnóstico: IA</h1>
+
+  <div id="quiz"></div>
+  <button onclick="calcularResultado()">Enviar</button>
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    let preguntas = [];
+
+    async function cargarPreguntas() {
+      const resp = await fetch("preguntas.json");
+      preguntas = await resp.json();
+      mostrarPreguntas();
+    }
+
+    function mostrarPreguntas() {
+      const quizDiv = document.getElementById("quiz");
+      quizDiv.innerHTML = "";
+      preguntas.forEach((p, i) => {
+        let html = `<p>${i + 1}. ${p.texto}</p>`;
+        p.opciones.forEach((op, j) => {
+          html += `
+            <label>
+              <input type="radio" name="preg${i}" value="${j}">
+              ${op}
+            </label><br>`;
+        });
+        quizDiv.innerHTML += html;
+      });
+    }
+
+    function calcularResultado() {
+      let score = 0;
+      preguntas.forEach((p, i) => {
+        const seleccion = document.querySelector(\`input[name="preg\${i}"]:checked\`);
+        if (seleccion && parseInt(seleccion.value) === p.correcta) {
+          score++;
+        }
+      });
+      document.getElementById("resultado").innerText =
+        \`Tu puntaje es: \${score} de \${preguntas.length}\`;
+    }
+
+    cargarPreguntas();
+  </script>
+</body>
+</html>
